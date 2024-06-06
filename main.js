@@ -1,35 +1,46 @@
 function LinkedList() {
-    const node = Node();
+    let head = null;
     
-    const headNode = (val, next) => {
-        node.setValue(val);
-        node.setNextNode(next);
-
-        const valueHead = node.getValue();
-        const nextHead = node.getNextNode();
-
-        return {
-            valueHead, nextHead
+    const createHeadNode = (val) => {
+        if (head === null) {
+            head = createNode();
+            head.setValue(val);
         }
     }
 
-    const headPointer = () => headNode;
+    const getHead = () => head;
 
-    const append = () => {
-
+    const traverse = () => {
+        let tmp = head;
+        
+        while (tmp !== null) {
+            console.log(tmp.getValue());
+            tmp = tmp.getNextNode();
+        }
     }
 
-    // initialNode(va);
+    const append = (val) => {
+        const newNode = createNode();
+        newNode.setValue(val);
+
+        let tmp = head;
+        while (tmp.getNextNode() !== null) {
+            tmp = tmp.getNextNode();
+        }
+        tmp.setNextNode(newNode);
+    }
 
     return {
-        headNode,
-        headPointer
+        createHeadNode,
+        getHead,
+        traverse,
+        append
     }
 }
 
-function Node(initialVal = null, initialNext = null) {
-    let value = initialVal;
-    let nextNode = initialNext;
+function createNode() {
+    let value = null;
+    let nextNode = null;
 
     const getValue = () => value;
     const getNextNode = () => nextNode;
@@ -50,14 +61,21 @@ function Node(initialVal = null, initialNext = null) {
     }
 }
 
-const testNode = Node();
-// console.log(testNode.getValue());
-// console.log(testNode.getNextNode());
-// console.log(testNode.setValue(20));
-// console.log(testNode.getValue());
-// console.log(testNode.setNextNode({val: 2, next: null}));
-// console.log(testNode.getNextNode());
-
+const testNode = createNode();
 const linkedList = LinkedList();
-console.log(linkedList.headNode(10, {val: 2, next: null}));
-console.log(linkedList.headPointer());
+linkedList.createHeadNode(10)
+
+const head = linkedList.getHead();
+const newNode = createNode();
+const newNewNode = createNode();
+
+newNode.setValue(5);
+head.setNextNode(newNode);
+newNewNode.setValue(20);
+newNode.setNextNode(newNewNode);
+
+console.log(linkedList.append(90));
+console.log(head.getValue());
+console.log(head.getNextNode().getValue());
+console.log(head.getNextNode().getNextNode().getValue());
+console.log(head.getNextNode().getNextNode().getNextNode().getValue());
